@@ -12,6 +12,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Project.Views.Index
 import Project.Views.Show
+import Project.Views.New
 import Project.Models exposing (ProjectId)
 import Routing exposing (Route(..))
 import Layout.Header as MyHeader
@@ -19,7 +20,7 @@ import Layout.Header as MyHeader
 
 view : Model -> Html Msg
 view model =
-    Scheme.topWithScheme Color.Indigo Color.DeepOrange <|
+    Scheme.topWithScheme Color.Blue Color.LightBlue <|
         Layout.render Mdl
             model.mdl
             [ Layout.fixedHeader
@@ -42,13 +43,14 @@ determineHeader model =
         ProjectShow id ->
             Project.Views.Show.header model id
 
+        ProjectNew ->
+            Project.Views.New.header model
+
         ProjectIndex ->
             Project.Views.Index.header model
 
         _ ->
-            MyHeader.defaultHeader "Nounours!"
-
-
+            MyHeader.defaultHeader "Header undefined!!"
 
 
 pageContent : Model -> Html Msg
@@ -62,6 +64,9 @@ pageContent model =
 
         ProjectShow id ->
             projectShowPage model id
+
+        ProjectNew ->
+            Project.Views.New.view model
 
         NotFound ->
             notFoundView

@@ -31,7 +31,7 @@ update msg model =
 
         ProjectMsg projectMsg ->
             let
-                (projectModel, cmd) =
+                ( projectModel, cmd ) =
                     Project.Update.update projectMsg model.projectModel
             in
-                ({model | projectModel = projectModel}, Cmd.map ProjectMsg cmd)
+                ( { model | projectModel = projectModel }, Cmd.map ProjectMsg cmd )

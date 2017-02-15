@@ -9,6 +9,7 @@ type Route
     = Home
     | ProjectIndex
     | ProjectShow ProjectId
+    | ProjectNew
     | NotFound
 
 
@@ -16,6 +17,7 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map Home top
+        , map ProjectNew (s "projects" </> s "new")
         , map ProjectShow (s "projects" </> string)
         , map ProjectIndex (s "projects")
         ]
@@ -44,6 +46,9 @@ pageToUrl route =
 
                 ProjectShow id ->
                     "projects/" ++ id
+
+                ProjectNew ->
+                    "projects/new"
 
                 NotFound ->
                     "oops... not found"

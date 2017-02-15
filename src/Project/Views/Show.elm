@@ -6,18 +6,22 @@ import Messages exposing (Msg(..))
 import Layout.Header
 import Models exposing (Model)
 
+
 view : Project -> Html Msg
 view project =
-    div [] [ h1 [] [ text project.title ]
-           , h4 [] [ text project.id ]
-           , div [] [ p [] [ text project.description ]
-                    ]
-           ]
+    div []
+        [ h1 [] [ text project.title ]
+        , h4 [] [ text project.id ]
+        , div []
+            [ p [] [ text project.description ]
+            ]
+        ]
 
 
 header : Model -> ProjectId -> List (Html Msg)
 header model id =
     Layout.Header.defaultHeader (projectTitle model id)
+
 
 projectTitle : Model -> ProjectId -> String
 projectTitle model id =
