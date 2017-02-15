@@ -8,6 +8,7 @@ import Project.Models exposing (ProjectId)
 type Route
     = Home
     | ProjectIndex
+    | ProjectEdit ProjectId
     | ProjectShow ProjectId
     | ProjectNew
     | NotFound
@@ -18,6 +19,7 @@ matchers =
     oneOf
         [ map Home top
         , map ProjectNew (s "projects" </> s "new")
+        , map ProjectEdit (s "projects" </> string </> s "edit")
         , map ProjectShow (s "projects" </> string)
         , map ProjectIndex (s "projects")
         ]
@@ -43,6 +45,9 @@ pageToUrl route =
 
                 ProjectIndex ->
                     "projects"
+
+                ProjectEdit id ->
+                    "projects/" ++ id ++ "/edit"
 
                 ProjectShow id ->
                     "projects/" ++ id

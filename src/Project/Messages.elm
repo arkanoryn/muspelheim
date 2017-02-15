@@ -1,6 +1,6 @@
 module Project.Messages exposing (..)
 
-import Project.Models exposing (ProjectId)
+import Project.Models exposing (ProjectId, Project)
 
 
 type Msg
@@ -8,3 +8,5 @@ type Msg
     | ChangeTitle String
     | ChangeDescription String
     | CreateProject
+    | UpdateTitle Project String
+    | UpdateDescription Project String

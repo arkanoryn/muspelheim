@@ -10,10 +10,11 @@ import Material.Layout as Layout
 import Material.Scheme as Scheme
 import Messages exposing (Msg(..))
 import Models exposing (Model)
+import Project.Views.Edit
 import Project.Views.Index
 import Project.Views.Show
 import Project.Views.New
-import Project.Models exposing (ProjectId)
+import Project.Models exposing (ProjectId, Project)
 import Routing exposing (Route(..))
 import Layout.Header as MyHeader
 
@@ -40,6 +41,9 @@ view model =
 determineHeader : Model -> List (Html Msg)
 determineHeader model =
     case model.route of
+        ProjectEdit id ->
+            Project.Views.Edit.header model
+
         ProjectShow id ->
             Project.Views.Show.header model id
 
@@ -62,6 +66,9 @@ pageContent model =
         ProjectIndex ->
             Project.Views.Index.view model
 
+        ProjectEdit id ->
+            projectEditPage model id
+
         ProjectShow id ->
             projectShowPage model id
 
@@ -71,21 +78,37 @@ pageContent model =
         NotFound ->
             notFoundView
 
+projectEditPage : Model -> ProjectId -> Html Msg
+projectEditPage model projectId =
+    let
+        maybeProject =
+            defineProject model projectId
+    in
+        case maybeProject of
+            Just project ->
+                Project.Views.Edit.view model project
+
+            Nothing ->
+                notFoundView
 
 projectShowPage : Model -> ProjectId -> Html Msg
 projectShowPage model projectId =
     let
         maybeProject =
-            model.projectModel.projects
-                |> List.filter (\project -> project.id == projectId)
-                |> List.head
+            defineProject model projectId
     in
-        case maybeProject of
-            Just project ->
-                Project.Views.Show.view project
+    case maybeProject of
+        Just project ->
+            Project.Views.Show.view model project
 
-            Nothing ->
-                notFoundView
+        Nothing ->
+            notFoundView
+
+defineProject : Model -> ProjectId -> Maybe Project
+defineProject model projectId =
+    model.projectModel.projects
+        |> List.filter (\project -> project.id == projectId)
+        |> List.head
 
 
 notFoundView : Html msg

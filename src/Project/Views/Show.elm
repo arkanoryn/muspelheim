@@ -7,8 +7,8 @@ import Layout.Header
 import Models exposing (Model)
 
 
-view : Project -> Html Msg
-view project =
+view : Model -> Project -> Html Msg
+view model project =
     div []
         [ h1 [] [ text project.title ]
         , h4 [] [ text project.id ]

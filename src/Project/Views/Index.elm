@@ -39,7 +39,34 @@ projectCard model projectModel id project =
             [ dynamic project.id projectModel
             , css "width" "100%"
             ]
-            [ Card.title
+            [ Card.actions
+                [ Card.border
+                , css "display" "flex"
+                , css "justify-content" "space-between"
+                , css "align-items" "right"
+                , css "padding" "8px 16px 8px 16px"
+                , Typography.caption
+                , Typography.contrast 1.87
+                , Typography.right
+                ]
+                  [ Button.render Mdl
+                      [0, 0, id]
+                      model.mdl
+                      [ Button.icon
+                      , Button.ripple
+                      , Options.onClick <| NavigateTo <| Just (ProjectEdit project.id)
+                      ]
+                      [ Icon.i "mode_edit" ]
+                  [ Button.render Mdl
+                      [0, 1, id]
+                      model.mdl
+                      [ Button.icon
+                      , Button.ripple
+                      , Options.onClick <| NavigateTo <| Just (ProjectDelete project.id)
+                      ]
+                      [ Icon.i "mode_edit" ]
+                  ]
+            , Card.title
                 [ css "height" "256px"
                 , css "padding" "0"
                   -- Clear default padding to encompass scrim

@@ -1,4 +1,4 @@
-module Project.Views.New exposing (view, header)
+module Project.Views.Edit exposing (view, header)
 
 import Html exposing (Html, div, text)
 import Layout.Header
@@ -10,35 +10,38 @@ import Material.Textfield as Textfield
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Project.Messages
-import Project.Models
+import Project.Models exposing (ProjectId, Project)
 import Routing exposing (Route(..))
 
 
-view : Model -> Html Msg
-view model =
+view : Model -> Project -> Html Msg
+view model project =
     grid []
-        [ cell cellOptions [ titleField model model.projectModel ]
-        , cell cellOptions [ descriptionField model model.projectModel ]
-        , cell cellOptions [ submitButton model model.projectModel ]
+        [ cell cellOptions [ (titleField model project) ]
+        , cell cellOptions [ (descriptionField model project) ]
+        , cell [ size All 6 ]
+            [ submitButton model project
+            , cancelButton model project
+            ]
         ]
 
 
-titleField : Model -> Project.Models.Model -> Html Msg
-titleField model projectModel =
+titleField : Model -> Project -> Html Msg
+titleField model project =
     Textfield.render Mdl
         [ 0, 0, 0 ]
         model.mdl
         [ Textfield.label "title"
         , Textfield.floatingLabel
         , Textfield.text_
-        , Textfield.value projectModel.projectForm.title
-        , onInput (ProjectMsg << Project.Messages.ChangeTitle)
+        , Textfield.value project.title
+        , onInput (ProjectMsg << Project.Messages.UpdateTitle project)
         ]
         []
 
 
-descriptionField : Model -> Project.Models.Model -> Html Msg
-descriptionField model projectModel =
+descriptionField : Model -> Project -> Html Msg
+descriptionField model project =
     Textfield.render Mdl
         [ 0, 0, 1 ]
         model.mdl
@@ -46,13 +49,13 @@ descriptionField model projectModel =
         , Textfield.floatingLabel
         , Textfield.textarea
         , Textfield.rows 6
-        , Textfield.value projectModel.projectForm.description
-        , onInput (ProjectMsg << Project.Messages.ChangeDescription)
+        , Textfield.value project.description
+        , onInput (ProjectMsg << Project.Messages.UpdateDescription project)
         ]
         []
 
 
-submitButton : Model -> Project.Models.Model -> Html Msg
+submitButton : Model -> Project -> Html Msg
 submitButton model projectModel =
     Button.render Mdl
         [ 0, 0, 2 ]
@@ -65,9 +68,21 @@ submitButton model projectModel =
         [ text "Submit" ]
 
 
+cancelButton : Model -> Project -> Html Msg
+cancelButton model project =
+    Button.render Mdl
+        [ 0, 0, 3 ]
+        model.mdl
+        [ Button.raised
+        , Button.ripple
+        , onClick <| NavigateTo <| Just (ProjectShow project.id)
+        ]
+        [ text "Submit" ]
+
+
 header : Model -> List (Html Msg)
 header model =
-    Layout.Header.defaultHeader "New project"
+    Layout.Header.defaultHeader "Edit project"
 
 
 cellOptions : List (Style a)

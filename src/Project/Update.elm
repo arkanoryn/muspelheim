@@ -13,10 +13,10 @@ update msg projectModel =
             { projectModel | raised = k } ! []
 
         ChangeTitle str ->
-            { projectModel | projectForm = (changeTitle projectModel str) } ! []
+            { projectModel | projectForm = (changeTitle projectModel.projectForm str) } ! []
 
         ChangeDescription str ->
-            { projectModel | projectForm = (changeDescription projectModel str) } ! []
+            { projectModel | projectForm = (changeDescription projectModel.projectForm str) } ! []
 
         CreateProject ->
             { projectModel
@@ -25,23 +25,28 @@ update msg projectModel =
             }
                 ! [ Navigation.newUrl (Routing.pageToUrl ProjectIndex) ]
 
+        UpdateTitle project str ->
+            let
+                updateTitle existingProject =
+                    if existingProject.id == project.id then
+                        changeTitle project str
+                    else
+                        existingProject
+            in
+            { projectModel | projects = (List.map updateTitle projectModel.projects) } ! []
 
-changeTitle : Project.Models.Model -> String -> Project
-changeTitle projectModel newTitle =
-    let
-        project =
-            projectModel.projectForm
-    in
-        { project | title = newTitle }
+        UpdateDescription project str ->
+            projectModel ! []
 
 
-changeDescription : Project.Models.Model -> String -> Project
-changeDescription projectModel newDescription =
-    let
-        project =
-            projectModel.projectForm
-    in
-        { project | description = newDescription }
+changeTitle : Project -> String -> Project
+changeTitle project newTitle =
+    { project | title = newTitle }
+
+
+changeDescription : Project -> String -> Project
+changeDescription project newDescription =
+    { project | description = newDescription }
 
 
 addNewProject : Project.Models.Model -> List Project
