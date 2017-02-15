@@ -45,6 +45,9 @@ update msg projectModel =
             in
             { projectModel | projects = (List.map updateDescription projectModel.projects) } ! []
 
+        UpdateProject ->
+            projectModel ! [ Navigation.newUrl (Routing.pageToUrl ProjectIndex) ]
+
         DeleteProject project ->
             let
                 removeProject existingProject =

@@ -19,10 +19,8 @@ view model project =
     grid []
         [ cell cellOptions [ (titleField model project) ]
         , cell cellOptions [ (descriptionField model project) ]
-        , cell [ size All 6 ]
-            [ submitButton model project
-            , cancelButton model project
-            ]
+        , cell [ size All 2 ] [ submitButton model project ]
+        , cell [ size All 2 ] [ cancelButton model project ]
         ]
 
 
@@ -63,7 +61,7 @@ submitButton model projectModel =
         [ Button.raised
         , Button.ripple
         , Button.colored
-        , onClick (ProjectMsg Project.Messages.CreateProject)
+        , onClick (ProjectMsg Project.Messages.UpdateProject)
         ]
         [ text "Submit" ]
 
@@ -77,7 +75,7 @@ cancelButton model project =
         , Button.ripple
         , onClick <| NavigateTo <| Just (ProjectShow project.id)
         ]
-        [ text "Submit" ]
+        [ text "cancel" ]
 
 
 header : Model -> List (Html Msg)
