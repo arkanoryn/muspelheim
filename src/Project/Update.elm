@@ -36,7 +36,24 @@ update msg projectModel =
             { projectModel | projects = (List.map updateTitle projectModel.projects) } ! []
 
         UpdateDescription project str ->
-            projectModel ! []
+            let
+                updateDescription existingProject =
+                    if existingProject.id == project.id then
+                        changeDescription project str
+                    else
+                        existingProject
+            in
+            { projectModel | projects = (List.map updateDescription projectModel.projects) } ! []
+
+        DeleteProject project ->
+            let
+                removeProject existingProject =
+                    if existingProject == project then
+                        []
+                    else
+                        [ existingProject ]
+            in
+            { projectModel | projects = List.concat (List.map removeProject projectModel.projects) } ! []
 
 
 changeTitle : Project -> String -> Project

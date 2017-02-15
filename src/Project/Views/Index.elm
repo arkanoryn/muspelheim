@@ -42,12 +42,9 @@ projectCard model projectModel id project =
             [ Card.actions
                 [ Card.border
                 , css "display" "flex"
-                , css "justify-content" "space-between"
-                , css "align-items" "right"
                 , css "padding" "8px 16px 8px 16px"
                 , Typography.caption
-                , Typography.contrast 1.87
-                , Typography.right
+                , Typography.contrast 0.77
                 ]
                   [ Button.render Mdl
                       [0, 0, id]
@@ -57,14 +54,15 @@ projectCard model projectModel id project =
                       , Options.onClick <| NavigateTo <| Just (ProjectEdit project.id)
                       ]
                       [ Icon.i "mode_edit" ]
-                  [ Button.render Mdl
+                  , Button.render Mdl
                       [0, 1, id]
                       model.mdl
                       [ Button.icon
                       , Button.ripple
-                      , Options.onClick <| NavigateTo <| Just (ProjectDelete project.id)
+                      , Button.accent
+                      , Options.onClick <| ProjectMsg <| (Project.Messages.DeleteProject project)
                       ]
-                      [ Icon.i "mode_edit" ]
+                      [ Icon.i "delete" ]
                   ]
             , Card.title
                 [ css "height" "256px"

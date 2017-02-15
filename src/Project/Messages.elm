@@ -10,3 +10,4 @@ type Msg
     | CreateProject
     | UpdateTitle Project String
     | UpdateDescription Project String
+    | DeleteProject Project
