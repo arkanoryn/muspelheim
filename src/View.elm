@@ -78,6 +78,7 @@ pageContent model =
         NotFound ->
             notFoundView
 
+
 projectEditPage : Model -> ProjectId -> Html Msg
 projectEditPage model projectId =
     let
@@ -91,18 +92,20 @@ projectEditPage model projectId =
             Nothing ->
                 notFoundView
 
+
 projectShowPage : Model -> ProjectId -> Html Msg
 projectShowPage model projectId =
     let
         maybeProject =
             defineProject model projectId
     in
-    case maybeProject of
-        Just project ->
-            Project.Views.Show.view model project
+        case maybeProject of
+            Just project ->
+                Project.Views.Show.view model project
 
-        Nothing ->
-            notFoundView
+            Nothing ->
+                notFoundView
+
 
 defineProject : Model -> ProjectId -> Maybe Project
 defineProject model projectId =

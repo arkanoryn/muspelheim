@@ -33,7 +33,7 @@ update msg projectModel =
                     else
                         existingProject
             in
-            { projectModel | projects = (List.map updateTitle projectModel.projects) } ! []
+                { projectModel | projects = (List.map updateTitle projectModel.projects) } ! []
 
         UpdateDescription project str ->
             let
@@ -43,7 +43,7 @@ update msg projectModel =
                     else
                         existingProject
             in
-            { projectModel | projects = (List.map updateDescription projectModel.projects) } ! []
+                { projectModel | projects = (List.map updateDescription projectModel.projects) } ! []
 
         UpdateProject ->
             projectModel ! [ Navigation.newUrl (Routing.pageToUrl ProjectIndex) ]
@@ -56,7 +56,7 @@ update msg projectModel =
                     else
                         [ existingProject ]
             in
-            { projectModel | projects = List.concat (List.map removeProject projectModel.projects) } ! []
+                { projectModel | projects = List.concat (List.map removeProject projectModel.projects) } ! []
 
 
 changeTitle : Project -> String -> Project

@@ -4,8 +4,8 @@ import Html exposing (Html, div, text)
 import Layout.Header
 import Material
 import Material.Button as Button
-import Material.Grid exposing (grid, size, cell, Device(..))
-import Material.Options exposing (Style, onClick, onInput)
+import Material.Grid exposing (grid, size, cell, offset, Device(..))
+import Material.Options exposing (Style, onClick, onInput, css)
 import Material.Textfield as Textfield
 import Messages exposing (Msg(..))
 import Models exposing (Model)
@@ -19,7 +19,12 @@ view model project =
     grid []
         [ cell cellOptions [ (titleField model project) ]
         , cell cellOptions [ (descriptionField model project) ]
-        , cell [ size All 2 ] [ submitButton model project ]
+        , cell
+            [ offset Desktop 4
+            , offset Tablet 2
+            , size All 2
+            ]
+            [ submitButton model project ]
         , cell [ size All 2 ] [ cancelButton model project ]
         ]
 
@@ -33,6 +38,7 @@ titleField model project =
         , Textfield.floatingLabel
         , Textfield.text_
         , Textfield.value project.title
+        , css "width" "100%"
         , onInput (ProjectMsg << Project.Messages.UpdateTitle project)
         ]
         []
@@ -48,6 +54,7 @@ descriptionField model project =
         , Textfield.textarea
         , Textfield.rows 6
         , Textfield.value project.description
+        , css "width" "100%"
         , onInput (ProjectMsg << Project.Messages.UpdateDescription project)
         ]
         []
@@ -61,6 +68,7 @@ submitButton model projectModel =
         [ Button.raised
         , Button.ripple
         , Button.colored
+        , css "width" "100%"
         , onClick (ProjectMsg Project.Messages.UpdateProject)
         ]
         [ text "Submit" ]
@@ -73,6 +81,7 @@ cancelButton model project =
         model.mdl
         [ Button.raised
         , Button.ripple
+        , css "width" "100%"
         , onClick <| NavigateTo <| Just (ProjectShow project.id)
         ]
         [ text "cancel" ]

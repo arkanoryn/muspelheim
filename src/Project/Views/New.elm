@@ -4,8 +4,8 @@ import Html exposing (Html, div, text)
 import Layout.Header
 import Material
 import Material.Button as Button
-import Material.Grid exposing (grid, size, cell, Device(..))
-import Material.Options exposing (Style, onClick, onInput)
+import Material.Grid exposing (grid, size, cell, stretch, Device(..))
+import Material.Options exposing (Style, onClick, onInput, css)
 import Material.Textfield as Textfield
 import Messages exposing (Msg(..))
 import Models exposing (Model)
@@ -16,7 +16,7 @@ import Routing exposing (Route(..))
 
 view : Model -> Html Msg
 view model =
-    grid []
+    grid [ ]
         [ cell cellOptions [ titleField model model.projectModel ]
         , cell cellOptions [ descriptionField model model.projectModel ]
         , cell cellOptions [ submitButton model model.projectModel ]
@@ -32,6 +32,7 @@ titleField model projectModel =
         , Textfield.floatingLabel
         , Textfield.text_
         , Textfield.value projectModel.projectForm.title
+        , css "width" "100%"
         , onInput (ProjectMsg << Project.Messages.ChangeTitle)
         ]
         []
@@ -47,6 +48,7 @@ descriptionField model projectModel =
         , Textfield.textarea
         , Textfield.rows 6
         , Textfield.value projectModel.projectForm.description
+        , css "width" "100%"
         , onInput (ProjectMsg << Project.Messages.ChangeDescription)
         ]
         []
@@ -72,4 +74,6 @@ header model =
 
 cellOptions : List (Style a)
 cellOptions =
-    [ size All 12 ]
+    [ size All 12
+    , stretch
+    ]

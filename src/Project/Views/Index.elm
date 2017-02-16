@@ -46,24 +46,24 @@ projectCard model projectModel id project =
                 , Typography.caption
                 , Typography.contrast 0.77
                 ]
-                  [ Button.render Mdl
-                      [0, 0, id]
-                      model.mdl
-                      [ Button.icon
-                      , Button.ripple
-                      , Options.onClick <| NavigateTo <| Just (ProjectEdit project.id)
-                      ]
-                      [ Icon.i "mode_edit" ]
-                  , Button.render Mdl
-                      [0, 1, id]
-                      model.mdl
-                      [ Button.icon
-                      , Button.ripple
-                      , Button.accent
-                      , Options.onClick <| ProjectMsg <| (Project.Messages.DeleteProject project)
-                      ]
-                      [ Icon.i "delete" ]
-                  ]
+                [ Button.render Mdl
+                    [ 0, 0, id ]
+                    model.mdl
+                    [ Button.icon
+                    , Button.ripple
+                    , Options.onClick <| NavigateTo <| Just (ProjectEdit project.id)
+                    ]
+                    [ Icon.i "mode_edit" ]
+                , Button.render Mdl
+                    [ 0, 1, id ]
+                    model.mdl
+                    [ Button.icon
+                    , Button.ripple
+                    , Button.accent
+                    , Options.onClick <| ProjectMsg <| (Project.Messages.DeleteProject project)
+                    ]
+                    [ Icon.i "delete" ]
+                ]
             , Card.title
                 [ css "height" "256px"
                 , css "padding" "0"

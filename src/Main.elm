@@ -11,15 +11,11 @@ import View exposing (view)
 
 init : Location -> ( Model, Cmd Msg )
 init location =
-    (initialModel Home) ! []
-
-
-
--- let
---     currentRoute =
---         Routing.parseLocation location
--- in
---     ( initialModel currentRoute, Cmd.none )
+    let
+        currentRoute =
+            Routing.parseLocation location
+    in
+        ( initialModel currentRoute, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
